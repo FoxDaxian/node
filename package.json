@@ -1,0 +1,29 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "study node&mongodb",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a13821190779/node.git"
+  },
+  "keywords": [
+    "node",
+    "mongodb"
+  ],
+  "author": "fox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a13821190779/node/issues"
+  },
+  "homepage": "https://github.com/a13821190779/node#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.5",
+    "nodemon": "^1.11.0"
+  }
+}
