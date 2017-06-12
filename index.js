@@ -45,14 +45,27 @@ app.post("/insert",function(req,res) {
 		name:data.name,
 		age:data.age
 	});
-	temp.save(function(err,data) {
+	temp.save().then( (data) => {
+		res.send({
+			code:1,
+			data
+		});
+	});
+});
+app.post("/delete",function(req,res) {
+	var data = req.body;
+	Home.remove( {_id:data.id}, (err) => {
 		if( err ){
-			console.log("存储失败");
-			res.send({code:0});
-			return
-		}
-		res.send({code:1});
+			console.log(err);
+			res.send({
+				code:0
+			});
 
+		}else{
+			res.send({
+				code:1
+			});
+		}
 	});
 });
 
