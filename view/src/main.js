@@ -5,11 +5,17 @@ import App from './App'
 import VueResource from "vue-resource";
 Vue.use(VueResource);
 
+
+import router from "@/router/";//大写会报错= = 
+
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
 	template: '<App/>',
-	components: { App }
+	components: { App },
+	router
 })

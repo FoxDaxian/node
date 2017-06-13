@@ -1,15 +1,18 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import VueRouter from 'vue-router'
+const Home = resolve => require(['@/component/home'], resolve)
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    }
-  ]
-})
+
+
+const routers = new VueRouter({
+	mode:"history",
+	routes : [{
+		path:"/",
+		name:"home",
+		component:Home
+	}]
+});
+
+export default routers;
