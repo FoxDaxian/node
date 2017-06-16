@@ -5,6 +5,8 @@ import App from './App'
 import VueResource from "vue-resource";
 Vue.use(VueResource);
 
+import "./assets/reset.css";
+
 
 import router from "@/router/";//大写会报错= = 
 
@@ -17,5 +19,5 @@ new Vue({
 	el: '#app',
 	template: '<App/>',
 	components: { App },
-	router
+	// router
 })

@@ -1,4 +1,4 @@
-const Home = require("./home.model.js");
+const Blog = require("./home.model.js");
 module.exports = {
-	Home
+	Blog
 };

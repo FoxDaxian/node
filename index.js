@@ -3,11 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');//需要这个中间件来处理post请求
 const config = require("./config/");
 
-const {Home} = require("./model/");
+const {Blog} = require("./model/");
 
 //连接数据库
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://localhost/blog");
 const db = mongoose.connection;
 db.on("error",function(error) {
 	console.log(`连接数据库失败：${error}`);
@@ -27,9 +27,18 @@ const commonRouter = require("./routers/common.router.js");
 
 app.use( commonRouter );
 
+app.get("/",function( req, res ) {
+	Blog.find(function( err, data ) {
+		if( err ){
+			console.log("查询数据库失败");
+			return
+		}
+		res.send(data);
+	});
+});
 
 app.get("/get",function( req, res ) {
-	Home.find(function( err, data ) {
+	Blog.find(function( err, data ) {
 		if( err ){
 			console.log("查询数据库失败");
 			return
@@ -39,7 +48,7 @@ app.get("/get",function( req, res ) {
 });
 app.post("/insert",function( req, res ) {
 	var data = req.body;
-	var temp = new Home({
+	var temp = new Blog({
 		name:data.name,
 		age:data.age
 	});
@@ -52,7 +61,7 @@ app.post("/insert",function( req, res ) {
 });
 app.post("/delete",function( req, res ) {
 	var data = req.body;
-	Home.remove( {_id:data.id}, ( err ) => {
+	Blog.remove( {_id:data.id}, ( err ) => {
 		if( err ){
 			console.log(err);
 			res.send({

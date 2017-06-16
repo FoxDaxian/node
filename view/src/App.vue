@@ -4,13 +4,17 @@
 
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<my-head></my-head>
 	</div>
 </template>
 
 <script>
+	import myHead from "@/component/header/header";
 	export default {
 		name: 'app',
+		components:{
+			myHead
+		},
 		data(){
 			return {
 
