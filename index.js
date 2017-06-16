@@ -16,6 +16,8 @@ db.on("open",function() {
 	console.log("连接数据库成功");
 });
 
+app.use(express.static("public"));//设置资源目录
+
 //处理json与formData数据
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

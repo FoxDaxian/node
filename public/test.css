@@ -1,0 +1,30 @@
+.wrap {
+    width: 100vw;
+}
+
+ul {
+    width: 100%;
+}
+
+li {
+    width: 7.5rem;
+    margin: 0.5rem auto;
+    text-align: center;
+}
+
+
+[data-dpr="1"] li {
+    background-color: red;
+    font-size: 20px;
+}
+
+[data-dpr="2"] li {
+    background-color: green;
+    font-size: 28px;
+}
+
+[data-dpr="3"] li {
+    background-color: blue;
+    font-size: 42px;
+}
+
