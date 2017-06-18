@@ -1,8 +1,66 @@
 header{
+	// min-width: 1024px;
+	margin-top: 8px;
+	padding: 0 14px;
+	box-sizing: border-box;
 	display: flex;
-	// height: 50px;
+	height: 40px;
 	justify-content:space-between;
 	.logo{
-		
+
+	}
+	@keyframes btnAnimation
+	{
+		0% {
+			top: 0px;
+			left: 0px;
+			box-shadow: 0 0 1px rgba(0,0,0,.6);
+		}
+		30% {
+			top: -1.3px;
+			left: -1.3px;
+			box-shadow: 4px 5px 0 3px rgba(0,0,0,.6),
+			inset -1px -1px 0 2px #ececec;
+		}
+		70% {
+			top: 0.5px;
+			left: 0.5px;
+			box-shadow: 2px 4px 0 1px rgba(0,0,0,.6),
+			inset -1px -1px 0 2px #ececec;
+		}
+		100% {
+			top: 0px;
+			left: 0px;
+			box-shadow: 3px 5px 0 2px rgba(0,0,0,.6),
+			inset -1px -1px 0 2px #ececec;	
+		}
+	}
+	.user_panel{
+		position: relative;
+		user-select:none;
+		line-height: 40px;
+		padding: 0 8px;	
+		cursor: pointer;
+		color:$main-color;
+		font-size: 16px;
+		box-sizing: border-box;
+		border:1px solid transparent;
+		&:hover{
+			//立体按钮
+			background-color: #fff;
+			border-bottom-left-radius: 2px;
+			border-top-right-radius: 2px;
+			border-color:rgba(0,0,0,.7);
+			animation:btnAnimation .4s;
+			box-shadow: 3px 5px 0 2px rgba(0,0,0,.6),
+			inset -1px -1px 0 2px #ececec;
+		}
+		&:active{
+			top: 1px;
+			left: 1px;
+			background-color: rgb(249, 249, 249);
+			border-color:rgba(0,0,0,.6);
+			box-shadow: 1px 3px 0 1px rgba(0,0,0,.6);
+		}
 	}
 }
