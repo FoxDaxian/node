@@ -6,7 +6,7 @@
 <template>
 	<header>
 		<canvas class="logo" ref="canvas"></canvas>
-		<div class="user_panel">登录/注册</div>
+		<div class="user_panel" @click="switchOuter">登录/注册</div>
 	</header>
 </template>
 
@@ -22,7 +22,11 @@
 			};
 		},
 		methods:{
-
+			switchOuter( e ){
+				const ev = e || window.event;
+				this.$emit('outer');
+				ev.stopPropagation();
+			}
 		},
 		mounted(){
 			const canvas = this.$refs.canvas;

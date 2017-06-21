@@ -1,0 +1,12 @@
+.contentWrap{
+	margin-top: 12px;
+	position: relative;
+	.content{
+		min-width: 1024px;
+		display: flex;
+		justify-content:space-between;
+		box-sizing: border-box;
+		padding: 0 14px;
+		padding-top: 12px;
+	}
+}
