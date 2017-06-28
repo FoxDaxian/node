@@ -9,6 +9,7 @@
 </template>
 
 <script>
+	//点击从右侧边出来的东西
 	export default {
 
 		name: 'outer',

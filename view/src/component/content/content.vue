@@ -1,4 +1,5 @@
 <style lang="scss" scoped>
+	@import "../../common/style.scss";
 	@import "./content.scss";
 </style>
 

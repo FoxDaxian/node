@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-	
+	@import "./article.scss";
 </style>
 
 <template>

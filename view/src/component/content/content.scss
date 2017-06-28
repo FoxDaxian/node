@@ -1,12 +1,14 @@
 .contentWrap{
-	margin-top: 12px;
+	border-top: 12px solid $zIndex1;
 	position: relative;
 	.content{
+		background-color: $zIndex3;
 		min-width: 1024px;
+		box-shadow: inset 0 0 20px 1px rgba(0, 0, 0, 0.6);
+		height: calc( 100vh - 170px);
 		display: flex;
 		justify-content:space-between;
 		box-sizing: border-box;
-		padding: 0 14px;
-		padding-top: 12px;
+		padding: 10px 14px;
 	}
 }

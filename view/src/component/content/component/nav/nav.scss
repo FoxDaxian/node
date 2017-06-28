@@ -1,3 +1,31 @@
 .navWrap{
-	background-color: red;
+	padding: 24px;	
+	box-sizing: border-box;
+	.link{
+		height: 60px;
+		line-height: 60px;
+		font-size: 16px;
+		cursor: pointer;
+		display: flex;
+		justify-content:space-around;
+		.iconWrap{
+			position: relative;
+			margin-right: 20px;
+			.icon_tag{
+				font-size: 12px;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto 0;
+			}
+		}
+		.value{
+			white-space: nowrap;
+			margin-left: 20px;
+		}
+	}
+	.router-link-active{//激活的时候
+		color:red;
+		cursor: default;
+	}
 }

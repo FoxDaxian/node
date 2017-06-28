@@ -15,10 +15,10 @@ const routers = new VueRouter({
 		path:"/",
 		name:"home",
 		components:{
-			crumbs:Crumbs,
-			nav:Nav,
-			article:Article,
-			sidebar:SideBar
+			crumbs:Crumbs,			//面包屑
+			nav:Nav,				//左侧导航
+			article:Article,		//中间主题内容
+			sidebar:SideBar 		//右边其他内容
 		}
 	}]
 });

@@ -32,7 +32,7 @@
 			const canvas = this.$refs.canvas;
 			canvas.width = 80;//三个字正好80，改变字数，改变宽度
 			canvas.height = 40;
-			//hover 文字静止效果
+			//还差 hover 文字静止效果
 			//摆动速度，摆动幅度，流畅程度和曲线程度
 			canvasText( canvas, "F o x", 1, 3, 150 );
 		}
