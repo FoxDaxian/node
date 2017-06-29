@@ -2,12 +2,31 @@
 	padding: 24px;	
 	box-sizing: border-box;
 	.link{
-		height: 60px;
-		line-height: 60px;
+		height: 50px;
+		line-height: 50px;
 		font-size: 16px;
 		cursor: pointer;
 		display: flex;
 		justify-content:space-around;
+		color: $main-color;
+		position: relative;
+		&:after{
+			content:'';
+			position: absolute;
+			height: 2px;
+			width: 0;
+			bottom: 0;
+			left: 50%;
+			transform:translateX(-50%);
+			background-color: $main-color;
+			transition:.4s;
+		}
+		&:hover{
+			&:after{
+				width: 100%;
+			}
+			color: #000;
+		}
 		.iconWrap{
 			position: relative;
 			margin-right: 20px;
@@ -25,7 +44,10 @@
 		}
 	}
 	.router-link-active{//激活的时候
-		color:red;
+		&:after{
+			width: 100%;
+		}
+		color: #000;
 		cursor: default;
 	}
 }

@@ -5,7 +5,7 @@
 
 <template>
 	<div class="contentWrap">
-		<router-view name="crumbs"></router-view>
+		<crumbs></crumbs>
 		<div class="content">
 			<router-view name="nav"></router-view>
 			<router-view name="article"></router-view>
@@ -16,13 +16,15 @@
 </template>
 
 <script>
-	import outer from "./component/outer/outer";
+	import outer from './component/outer/outer'
+	import crumbs from '@/component/content/component/crumbs/crumbs'
+
 	export default {
 
 		name: 'content',
 		props:["onoff"],
 		components:{
-			outer
+			outer, crumbs
 		},
 		data () {
 			return {

@@ -1,5 +1,6 @@
 <style lang="scss" scoped>
 	@import "../../../../assets/index.scss";
+	@import "../../../../common/style.scss";
 	@import "./nav.scss";
 </style>
 

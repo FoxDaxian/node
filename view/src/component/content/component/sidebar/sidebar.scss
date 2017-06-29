@@ -1,3 +1,44 @@
 .sidebarWrap{
-	
+	padding: 24px;
+	.link{
+		font-size: 14px;
+		padding: 8px 14px;
+		cursor: pointer;
+		text-align: center;
+		position: relative;
+		.iconWrap{
+			display: none;
+			color: #000;
+			position: absolute;
+			top: 50%;
+			transform:translateY(-50%);
+			left: -10px;
+		}
+		.span{
+			color: $main-color;
+		}
+		&:after{
+			display: none;
+			content:attr(data-text);
+			position: absolute;
+			font-weight: bold;
+			width: 100%;
+			height: 100%;
+			left: 50%;
+			transform:translateX(-50%) translateY(-50%);
+			top: 50;
+			color: $main-color;
+		}
+		&:hover{
+			&:after{
+				display: block;
+			}
+			.iconWrap{
+				display: block;
+			}
+			span{
+				color:transparent;
+			}
+		}
+	}
 }
