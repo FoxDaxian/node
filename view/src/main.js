@@ -3,15 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from "vue-resource"
-
-Vue.use(VueResource);
+import miniprogress from 'miniprogress'
+import 'miniprogress/lib/progress.css'
 
 import './assets/reset.css'
+import router from "@/router/" //大写会报错= = 
+console.log(miniprogress)
+miniprogress.start()
 
-
-import router from "@/router/";//大写会报错= = 
-
-
+Vue.use(VueResource)
 
 Vue.config.productionTip = false
 
