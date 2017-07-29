@@ -8,10 +8,13 @@ import 'miniprogress/lib/progress.css'
 
 import './assets/reset.css'
 import router from "@/router/" //大写会报错= = 
-console.log(miniprogress)
-miniprogress.start()
+// miniprogress.start()
 
 Vue.use(VueResource)
+
+if (process.env.NODE_ENV === 'development') {
+	Vue.prototype.url = 'http://localhost:3000/'
+}
 
 Vue.config.productionTip = false
 
