@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router({
 	caseSensitive: false //默认不区分大小写
 })
-const { Blog } = require('../model/')
+const userRouter = require('./user.router.js')
 
 router.use(( req, res, next ) => {
 	res.header('Access-Control-Allow-Origin', '*')
@@ -15,26 +15,6 @@ router.use(( req, res, next ) => {
 	next()
 })
 
-router.post('/get', (req, res, next) => {
-	const body = req.body
-	const user = new Blog({
-		name: body.name,
-		age: body.age
-	})
-	user.save((err, instance) => {
-		if (err) {
-			res.json({
-				status: 0,
-				msg: err
-			})
-			return
-		}
-		res.json({
-			status: 1,
-			msg: '保存成功',
-			res: instance
-		})
-	})
-})
+router.use(userRouter)
 
 module.exports = router
