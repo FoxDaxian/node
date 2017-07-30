@@ -1,4 +1,4 @@
-const Blog = require("./home.model.js");
+const User = require("./user.model.js");
 module.exports = {
-	Blog
+	User
 };
