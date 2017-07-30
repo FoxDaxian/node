@@ -10,6 +10,7 @@
 			<router-view name="nav"></router-view>
 			<router-view name="article"></router-view>
 			<router-view name="sidebar"></router-view>
+			<router-view></router-view>
 		</div>
 		<outer :onoff="onoff"></outer>
 	</div>

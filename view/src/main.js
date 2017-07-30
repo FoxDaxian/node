@@ -8,9 +8,13 @@ import 'miniprogress/lib/progress.css'
 
 import './assets/reset.css'
 import router from "@/router/" //大写会报错= = 
-// miniprogress.start()
 
+import { store } from './store/'
+import storeTool from './tools/store.tool'
+
+Vue.use(storeTool)
 Vue.use(VueResource)
+Vue.prototype.progress = miniprogress
 
 if (process.env.NODE_ENV === 'development') {
 	Vue.prototype.url = 'http://localhost:3000/'
@@ -23,5 +27,6 @@ new Vue({
 	el: '#app',
 	template: '<App/>',
 	components: { App },
-	router
+	router,
+	store
 })

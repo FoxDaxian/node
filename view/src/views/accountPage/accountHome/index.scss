@@ -1,0 +1,57 @@
+.wrap{
+	width: 100%;
+	height: 100%;
+	.taps{
+		&:after{
+			content:'';
+			display: block;
+			clear: both;
+		}
+		.centerWrap{
+			width: 50%;
+			float: left;
+			>div{
+				cursor: pointer;
+				text-align: center;
+				font-size: 20px;
+				padding: 10px 0;
+				position: relative;
+				overflow: hidden;
+				width: 20%;
+				left: 50%;
+				transform: translateX(-50%);
+				transition: color 0.4s;
+				&:after{
+					content:'';
+					position: absolute;
+					z-index: -1;
+					left: 50%;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+					border-radius: 6px;
+					width: 100%;
+					height: 100%;
+					border: 2px solid #000;
+					box-sizing: border-box;
+					transition: width 0.2s,height 0.2s;
+				}
+				&:hover{
+					&:after{
+						width: 60px;
+						height: 40px;
+					}
+				}
+			}
+			.activeClass{
+				&:after{
+					width: 50px!important;
+					height: 30px!important;
+				}
+			}
+		}
+		.login{
+		}
+		.register{
+		}
+	}
+}

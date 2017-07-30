@@ -28,26 +28,9 @@
 		methods:{
 			outerFn () {
 				this.outerOnoff = !this.outerOnoff
-			},
-			async ajax () {
-				try {
-					const res = await this.$http({
-						method: 'post',
-						url: `${this.url}get`,
-						body: {
-							name: '冯世雨',
-							age: ~~(Math.random() * 10)
-						}
-					})
-					console.log(res)
-					console.log(JSON.stringify(res, null, 4))
-				} catch (err) {
-					console.log(err)
-				}
 			}
 		},
 		mounted () {
-			this.ajax()
 			window.addEventListener('click', (e) => {
 				this.outerOnoff && (this.outerOnoff = false)
 			});
