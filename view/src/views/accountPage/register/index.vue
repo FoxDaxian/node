@@ -51,13 +51,13 @@
             async register () {
                 try {
                     this.progress.start()
-                    // if (!validate.user(this.account) 
-                    //     || !validate.email(this.email) 
-                    //     || !validate.password(this.password) 
-                    //     || !validate.issamepw(this.password, this.repassword)) {
-                    //     console.log('请检查您的输入')
-                    //     return
-                    // }
+                    if (!validate.user(this.account) 
+                        || !validate.email(this.email) 
+                        || !validate.password(this.password) 
+                        || !validate.issamepw(this.password, this.repassword)) {
+                        console.log('请检查您的输入')
+                        return
+                    }
                     const res = await this.$http({
                         method: 'post',
                         url: `${this.url}register`,
@@ -70,6 +70,9 @@
                     const resDate = res.body.res
                     this.storeCommit('serUserInfo', {...resDate})
                     this.progress.done()
+                    this.$router.push({
+                        name: 'home'
+                    })
                 } catch (err) {
                     console.log(err)
                     this.progress.done('fail')
