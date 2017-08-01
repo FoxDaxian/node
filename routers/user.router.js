@@ -4,6 +4,20 @@ const router = express.Router({
 })
 const { User } = require('../model/')
 
+// 验证身份，即有无session
+router.get('/authentication', (req, res, next) => {
+	if (typeof req.session.user !== 'undefined') {
+		res.json({
+			userInfo: req.session.user
+		})
+	} else {
+		res.json({
+			mas: '你是谁?'
+		})
+	}
+})
+
+// 注册
 router.post('/register', (req, res, next) => {
 	const body = req.body
 	const user = new User({
@@ -20,6 +34,7 @@ router.post('/register', (req, res, next) => {
 			})
 			return
 		}
+		req.session.user = instance
 		res.json({
 			status: 1,
 			msg: '保存成功',
