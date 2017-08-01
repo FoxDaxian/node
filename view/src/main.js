@@ -14,10 +14,15 @@ import storeTool from './tools/store.tool'
 
 Vue.use(storeTool)
 Vue.use(VueResource)
+Vue.http.interceptors.push((request, next) => {
+	request.credentials = true
+	next()
+})
+
 Vue.prototype.progress = miniprogress
 
 if (process.env.NODE_ENV === 'development') {
-	Vue.prototype.url = 'http://localhost:3000/'
+	Vue.prototype.url = 'http://localhost:3000/api/'
 }
 
 Vue.config.productionTip = false
