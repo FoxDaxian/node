@@ -4,11 +4,21 @@ const router = express.Router({
 })
 const { User } = require('../model/')
 
+// 后端验证用户是否登陆
+// router.use((req, res, next) => {
+// 	if (!req.session || !req.session.token) {
+// 		return res.status(401).json({
+// 			msg: '用户未登录'
+// 		})
+// 	}
+// 	next()
+// })
+
 // 验证身份，即有无session
 router.get('/authentication', (req, res, next) => {
-	if (typeof req.session.user !== 'undefined') {
+	if (typeof req.session.token !== 'undefined') {
 		res.json({
-			userInfo: req.session.user
+			token: req.session.token
 		})
 	} else {
 		res.json({
@@ -34,7 +44,7 @@ router.post('/register', (req, res, next) => {
 			})
 			return
 		}
-		req.session.user = instance
+		req.session.token = instance
 		res.json({
 			status: 1,
 			msg: '保存成功',

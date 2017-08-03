@@ -29,23 +29,9 @@
 			outerFn () {
 				this.outerOnoff = !this.outerOnoff
 			},
-			async fn () {
-                try {
-                    this.progress.start()
-                    const res = await this.$http({
-                        method: 'get',
-                        url: `${this.url}authentication`
-                    })
-                    console.log(res)
-                } catch (err) {
-                    console.log(err)
-                    this.progress.done('fail')
-                }
-            }
+			
 		},
 		mounted () {
-			// 进行身份验证的地方
-			this.fn()
 			window.addEventListener('click', (e) => {
 				this.outerOnoff && (this.outerOnoff = false)
 			});
