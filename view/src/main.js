@@ -12,6 +12,7 @@ import router from "@/router/" //大写会报错= =
 import { store } from './store/'
 import storeTool from './tools/store.tool'
 
+
 Vue.use(storeTool)
 Vue.use(VueResource)
 Vue.http.interceptors.push((request, next) => {
@@ -32,6 +33,6 @@ new Vue({
 	el: '#app',
 	template: '<App/>',
 	components: { App },
-	router,
+	router: router(Vue.http, miniprogress, Vue.prototype.url),
 	store
 })

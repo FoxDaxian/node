@@ -11,52 +11,60 @@ const login = resolve => require(['@/views/accountPage/login/'], resolve)
 
 Vue.use(VueRouter)
 
-const routers = new VueRouter({
-	mode: "history",
-	routes: [{
-		path: "/",
-		name: "home",
-		components: {
-			nav: Nav,				//左侧导航
-			article: Article,		//中间主题内容
-			sidebar: SideBar 		//右边其他内容
-		}
-	}, {
-		path: "/account",
-		name: "account",
-		component: accountHome,
-		children: [{
-			path: "register",
-			name: 'register',
-			component: register
+const foo = (http, progress, url) => {
+	const routers = new VueRouter({
+		mode: "history",
+		routes: [{
+			path: "/",
+			name: "home",
+			components: {
+				nav: Nav,				//左侧导航
+				article: Article,		//中间主题内容
+				sidebar: SideBar 		//右边其他内容
+			}
 		}, {
-			path: "login",
-			name: 'login',
-			component: login
+			path: "/account",
+			name: "account",
+			component: accountHome,
+			children: [{
+				path: "register",
+				name: 'register',
+				component: register
+			}, {
+				path: "login",
+				name: 'login',
+				component: login
+			}]
 		}]
-	}]
-})
+	})
 
-const fn =  async () => {
-	try {
-		// this.progress.start()
-		const res = await this.$http({
-			method: 'get',
-			url: `${this.url}authentication`
-		})
-		console.log(res)
-		console.log(JSON.stringify(res, null, 4))
-		// this.progress.done()
-	} catch (err) {
-		console.log(err)
-		// this.progress.done('fail')
+	const authentication =  async (http) => {
+		try {
+			progress.start()
+			const res = await http({
+				method: 'get',
+				url: `${url}authentication`
+			})
+			if (res.data.token) {
+				store.commit('serUserInfo', res.data.token)
+			} else {
+				store.commit('serUserInfo', {})
+			}
+			progress.done()
+		} catch (err) {
+			console.log(err)
+			progress.done('fail')
+		}
 	}
+
+	routers.beforeEach((to, from, next) => {
+		if (!Object.keys(store.state.userInfo).length) {
+			authentication(http)
+		}
+		next()
+	})
+
+	return routers
 }
 
-routers.beforeEach((to, from, next) => {
-	fn()
-	console.log(store.state)
-	next()
-})
-
-export default routers
+export default foo
