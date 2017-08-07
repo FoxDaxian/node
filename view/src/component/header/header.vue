@@ -7,8 +7,8 @@
 	<header>
 		<canvas class="logo" ref="canvas" @click="backHome"></canvas>
 		<div class="user_panel" @click="interactiveEvent">
-			<span v-if="Object.keys(userInfo).length"><img :src="require(`@/assets/default-avator${randomNum}.png`)" alt=""></span>
-			<span v-else>登录/注册</span>
+			<span v-if="Object.keys(userInfo).length"><img :src="require(`@/assets/default-avator.png`)" alt="fox"></span>
+			<span v-text="msg" v-else></span>
 		</div>
 	</header>
 </template>
@@ -23,7 +23,7 @@
 
 		data () {
 			return {
-				randomNum: ~~(Math.random() * 3 + 1)
+				msg: '登录/注册'
 			}
 		},
 		computed: {
