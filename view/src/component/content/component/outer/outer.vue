@@ -1,6 +1,6 @@
 <style lang="scss" scoped>
     @import "~common";
-	@import "./outer.scss"
+	@import "./outer.scss";
 </style>
 
 <template>
