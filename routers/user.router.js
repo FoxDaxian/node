@@ -7,6 +7,7 @@ const { User } = require('../model/')
 // 验证身份，即有无session
 router.get('/authentication', (req, res, next) => {
 	if (typeof req.session.token !== 'undefined') {
+		delete req.session.token.password
 		res.json({
 			token: req.session.token
 		})

@@ -68,6 +68,7 @@
                         }
                     })
                     const resDate = res.body.res
+                    delete resDate.password
                     this.storeCommit('serUserInfo', {...resDate})
                     this.progress.done()
                     this.$router.push({
