@@ -1,7 +1,7 @@
 .outerWrap{
 	position: fixed;
 	top: 0;
-	color:red;
+	color: $main-color;
 	width: 300px;
 	height: 100vh;
 	word-wrap:break-word;
@@ -11,4 +11,5 @@
 	box-shadow:inset 5px 0 5px 1px #ececec;
 	border-top: 8px solid transparent;
 	border-bottom: 8px solid transparent;
+	outline:0;
 }

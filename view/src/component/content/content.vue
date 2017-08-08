@@ -12,7 +12,7 @@
 			<router-view name="sidebar"></router-view>
 			<router-view></router-view>
 		</div>
-		<outer :onoff="onoff"></outer>
+		<outer></outer>
 	</div>
 </template>
 
@@ -23,7 +23,6 @@
 	export default {
 
 		name: 'content',
-		props:["onoff"],
 		components:{
 			outer, crumbs
 		},

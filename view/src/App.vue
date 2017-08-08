@@ -4,13 +4,14 @@
 
 <template>
 	<div id="app">
-		<my-head @outer="outerFn"></my-head>
-		<my-content :onoff="outerOnoff"></my-content>
+		<my-head></my-head>
+		<my-content></my-content>
 		<my-footer></my-footer>
 	</div>
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	import myHead from "@/component/header/header"
 	import myContent from "@/component/content/content"
 	import myFooter from "@/component/footer/footer"
@@ -22,18 +23,16 @@
 		},
 		data () {
 			return {
-				outerOnoff: false
 			}
 		},
 		methods:{
-			outerFn () {
-				this.outerOnoff = !this.outerOnoff
-			},
-			
+		},
+		computed: {
+			...mapState(['profile'])
 		},
 		mounted () {
 			window.addEventListener('click', (e) => {
-				this.outerOnoff && (this.outerOnoff = false)
+				this.profile && this.storeCommit('toggleProfile')
 			});
 		}
 	}

@@ -1,41 +1,64 @@
 <style lang="scss" scoped>
-	@import "./outer.scss";
+    @import "~common";
+	@import "./outer.scss"
 </style>
 
 <template>
-	<div class="outerWrap" :style="{right:`${right}px`,transform:`translateX(${constRight}px)`}" ref="outerWrap" @click="stopPropagation">
-
+	<div 
+	tabindex="0" 
+	hidefocus="true"
+	class="outerWrap" 
+	:style="{right:`${right}px`,transform:`translateX(${constRight}px)`}" 
+	ref="outerWrap" 
+	@click="stopPropagation"
+	@keydown="hidePanel"
+	>
+		<p v-text="userInfo.username ? userInfo.username : userInfo.account"></p>
+		<p v-text="userInfo.email"></p>
+		<button @click="gotothe">点击</button>
 	</div>
 </template>
 
 <script>
+	import { mapState } from 'vuex'
+
 	//点击从右侧边出来的东西
 	export default {
 
 		name: 'outer',
-		props:["onoff"],
 		data () {
 			return {
-				constRight:0,
-				right:0,
-			};
-		},
-		methods:{
-			stopPropagation( e ){
-				const ev = e || window.event;
-				ev.stopPropagation();
+				constRight:0
 			}
 		},
-		watch:{
-			onoff( val, old ){
-				this.right = val ? this.$refs.outerWrap.offsetWidth : 0;
+		methods: {
+			stopPropagation (e) {
+				const ev = e || window.event
+				ev.stopPropagation()
+			},
+			// 为什么用keydown而不用keypress？
+			// 因为键盘上非字符的键位不会触发keypress
+			hidePanel (e) {
+				const ev = e || window.event
+				if (ev.keyCode === 27) {
+					this.profile && this.storeCommit('toggleProfile')
+				}
+			},
+			gotothe () {
+				this.storeCommit('toggleProfile')
 			}
 		},
-		computed:{
-
+		computed: {
+			...mapState(['userInfo', 'profile']),
+			right () {
+				if (this.profile) {
+					this.$refs.outerWrap.focus()
+				}
+				return this.profile ? this.$refs.outerWrap.offsetWidth : 0
+			}
 		},
-		mounted(){
-			this.constRight = this.$refs.outerWrap.offsetWidth;
+		mounted () {
+			this.constRight = this.$refs.outerWrap.offsetWidth
 		}
-	};
+	}
 </script>
