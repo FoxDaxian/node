@@ -26,11 +26,24 @@
 			}
 		},
 		methods:{
+			async fn () {
+				try {
+					const res = await this.$http({
+						method: 'get',
+						url: `${ this.testUrl }`
+					})
+					console.log('七牛测试', res)
+					console.log('http://oqvlh6ipq.bkt.clouddn.com/');
+				} catch (err) {
+					console.log('七牛测试失败', JSON.stringify(err, null, 4))
+				}
+			}
 		},
 		computed: {
 			...mapState(['profile'])
 		},
 		mounted () {
+			this.fn()
 			window.addEventListener('click', (e) => {
 				this.profile && this.storeCommit('toggleProfile')
 			});
