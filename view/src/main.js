@@ -24,6 +24,7 @@ Vue.prototype.progress = miniprogress
 
 if (process.env.NODE_ENV === 'development') {
 	Vue.prototype.url = 'http://localhost:3000/api/'
+	Vue.prototype.testUrl = 'http://localhost:3000/api/qiniu'
 }
 
 Vue.config.productionTip = false

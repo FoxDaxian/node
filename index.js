@@ -8,6 +8,13 @@ const MongoStore = require('connect-mongo')(session) // session存储的地方�
 const config = require('./config/')
 const commonRouter = require('./routers/common.router.js')
 
+
+const qiniu = require('qiniu')
+const accessKey = 'bETmnVX9dU_99S5JBxO991fHKdAi7NjabG7Rrkiz'
+const secretKey = 'Pq7c-GOmjn0Rn5vg8nHIBhiN6zfgwvTjyTVvWV3R'
+const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
+
+
 global.Promise = bluebird
 
 //连接数据库
@@ -50,6 +57,36 @@ app.use(session({
 
 // use 路由
 app.use( '/api', commonRouter )
+app.use( '/api/qiniu', (req, res, next) => {
+	var config = new qiniu.conf.Config();
+	config.zone = qiniu.zone.Zone_z1;
+	var options = {
+	  scope: 'foxxx' // 七牛空间仓库名
+	}
+	var putPolicy = new qiniu.rs.PutPolicy(options)
+	var uploadToken = putPolicy.uploadToken(mac)
+
+	var localFile = 'C:/Users/1/Desktop/th.jpg'
+	var formUploader = new qiniu.form_up.FormUploader(config)
+	var putExtra = new qiniu.form_up.PutExtra();
+	var key='test.jpg';
+	// 文件上传
+	formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
+	  respBody, respInfo) {
+	  if (respErr) {
+	    throw respErr;
+	  }
+	  if (respInfo.statusCode == 200) {
+	    res.json({
+	    	status: 1,
+	    	msg: respBody
+	    })
+	  } else {
+	    console.log(respInfo.statusCode);
+	    console.log(respBody);
+	  }
+	})
+} )
 
 // 配置文件选项，监听
 app.listen(config.port)
