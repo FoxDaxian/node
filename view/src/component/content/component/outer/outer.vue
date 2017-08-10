@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-    @import "~common";
+	@import "~common";
 	@import "./outer.scss";
 </style>
 
@@ -13,10 +13,13 @@
 	@click="stopPropagation"
 	@keydown="hidePanel"
 	>
-		<p v-text="userInfo.username ? userInfo.username : userInfo.account"></p>
-		<p v-text="userInfo.email"></p>
-		<button @click="gotothe">点击</button>
-	</div>
+	<img :src="userInfo.avator" alt="" v-if="userInfo.avator">
+	<img :src="require(`@/assets/default-avator.png`)" alt="" v-else>
+	<p v-text="userInfo.username ? userInfo.username : userInfo.account"></p>
+	<p v-text="moment(userInfo.create_at).format('YYYY-MM-DD HH:mm:ss')"></p>
+	<div class="profile">个人信息</div>
+	<div class="signOut" @click="signOut">退出</div>
+</div>
 </template>
 
 <script>
@@ -44,8 +47,23 @@
 					this.profile && this.storeCommit('toggleProfile')
 				}
 			},
-			gotothe () {
-				this.storeCommit('toggleProfile')
+			async signOut () {
+				try {
+					this.progress.start()
+					const res = await this.$http({
+					    method: 'get',
+					    url: `${this.url}signout`
+					})
+					if (res.body.status) {
+						this.storeCommit('serUserInfo')
+						this.storeCommit('toggleProfile')
+		                this.progress.done()
+					} else {
+						this.progress.done('fail')
+					}
+				} catch (err) {
+					console.log(err)
+				}
 			}
 		},
 		computed: {
