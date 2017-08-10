@@ -66,10 +66,10 @@ app.use( '/api/qiniu', (req, res, next) => {
 	var putPolicy = new qiniu.rs.PutPolicy(options)
 	var uploadToken = putPolicy.uploadToken(mac)
 
-	var localFile = 'C:/Users/1/Desktop/th.jpg'
+	var localFile = 'C:/Users/1/Desktop/fsy.jpg'
 	var formUploader = new qiniu.form_up.FormUploader(config)
 	var putExtra = new qiniu.form_up.PutExtra();
-	var key='test.jpg';
+	var key='fsy.jpg';
 	// 文件上传
 	formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
 	  respBody, respInfo) {

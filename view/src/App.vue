@@ -43,7 +43,7 @@
 			...mapState(['profile'])
 		},
 		mounted () {
-			this.fn()
+			// this.fn()
 			window.addEventListener('click', (e) => {
 				this.profile && this.storeCommit('toggleProfile')
 			});
