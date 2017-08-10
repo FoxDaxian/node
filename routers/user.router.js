@@ -22,7 +22,6 @@ router.get('/authentication', (req, res, next) => {
 router.post('/register', (req, res, next) => {
 	const body = req.body
 	const user = new User({
-		username : '',
 		account: body.account,
 		password: body.password,
 		email: body.email
@@ -41,6 +40,50 @@ router.post('/register', (req, res, next) => {
 			msg: '保存成功',
 			res: instance
 		})
+	})
+})
+
+router.get('/signout', (req, res, next) => {
+	req.session.destroy((err) => {
+		if (err) {
+			res.json({
+				status: 0,
+				msg: '退出失败'
+			})
+			return
+		}
+		res.json({
+			status: 1,
+			msg: '退出成功'
+		})
+	})
+})
+
+router.post('/signin', (req, res, next) => {
+	const body = req.body
+	User.findOne({
+		account: body.account,
+		password: body.password,
+	}, (err, docs) => {
+		if (err) {
+			res.json({
+				tatus: 0,
+				msg: '查询时出错'
+			})
+			return 
+		}
+		if (docs !== null) {
+			req.session.token = docs
+			res.json({
+				tatus: 1,
+				res: docs
+			})
+		} else {
+			res.json({
+				tatus: 2,
+				res: '没有该账户'
+			})
+		}
 	})
 })
 
