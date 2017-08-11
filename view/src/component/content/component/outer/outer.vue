@@ -54,15 +54,26 @@
 					    method: 'get',
 					    url: `${this.url}signout`
 					})
-					if (res.body.status) {
-						this.storeCommit('serUserInfo')
-						this.storeCommit('toggleProfile')
-		                this.progress.done()
-					} else {
-						this.progress.done('fail')
-					}
+					this.storeCommit('serUserInfo')
+					this.storeCommit('toggleProfile')
+	                this.progress.done()
+					console.log(res.body.msg)
 				} catch (err) {
-					console.log(err)
+	                this.progress.done('fail')
+					console.log(err.body.msg)
+				}
+			},
+			async test () {
+				try {
+					this.progress.start()
+					const res = await this.$http({
+					    method: 'get',
+					    url: `${this.url}test`
+					})
+	                this.progress.done()
+	                console.log(res)
+				} catch (err) {
+	                this.progress.done('fail')
 				}
 			}
 		},
@@ -76,6 +87,7 @@
 			}
 		},
 		mounted () {
+			this.test()
 			this.constRight = this.$refs.outerWrap.offsetWidth
 		}
 	}

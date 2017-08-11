@@ -52,8 +52,8 @@ const foo = (http, progress, url) => {
 			}
 			progress.done()
 		} catch (err) {
-			console.log(err)
 			progress.done('fail')
+			console.log(err)
 		}
 	}
 

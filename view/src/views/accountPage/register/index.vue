@@ -70,13 +70,14 @@
                     const resDate = res.body.res
                     delete resDate.password
                     this.storeCommit('serUserInfo', {...resDate})
-                    this.progress.done()
                     this.$router.push({
                         name: 'home'
                     })
+                    this.progress.done()
+                    console.log(res.body.msg)
                 } catch (err) {
-                    console.log(err)
                     this.progress.done('fail')
+                    console.log(err.body.msg)
                 }
             }
         },

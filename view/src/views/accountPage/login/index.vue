@@ -42,25 +42,15 @@
                         }
                     })
                     const resDate = res.body.res
-                    switch (res.body.tatus) {
-                        case 0:
-                            console.log('查询时出错')
-                            this.progress.done('fail')
-                        break;
-                        case 1:
-                            this.progress.done()
-                            this.storeCommit('serUserInfo', {...resDate})
-                            this.$router.push({
-                                name: 'home'
-                            })
-                        break;
-                        case 2:
-                            console.log('没有该账户')
-                            this.progress.done('fail')
-                        break;
-                    }
+                    this.storeCommit('serUserInfo', {...resDate})
+                    this.$router.push({
+                        name: 'home'
+                    })
+                    this.progress.done()
+                    console.log(res.body.msg)
                 } catch (err) {
-                    console.log(err)
+                    console.log(err.body.msg)
+                    this.progress.done('fail')
                 }
             },
             replaceCn () {
