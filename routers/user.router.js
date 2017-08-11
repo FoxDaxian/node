@@ -1,4 +1,5 @@
 const express = require('express')
+const request = require('request')
 const router = express.Router({
 	caseSensitive: false //默认不区分大小写
 })
@@ -8,11 +9,11 @@ const { User } = require('../model/')
 router.get('/authentication', (req, res, next) => {
 	if (typeof req.session.token !== 'undefined') {
 		delete req.session.token.password
-		res.json({
+		return res.json({
 			token: req.session.token
 		})
 	} else {
-		res.json({
+		return res.json({
 			msg: '你是谁?'
 		})
 	}
@@ -28,17 +29,17 @@ router.post('/register', (req, res, next) => {
 	})
 	user.save((err, instance) => {
 		if (err) {
-			res.json({
+			res.status(403)
+			return res.json({
 				status: 0,
-				msg: err
+				msg: '注册失败'
 			})
-			return
 		}
 		req.session.token = instance
 		res.json({
 			status: 1,
-			msg: '保存成功',
-			res: instance
+			res: instance,
+			msg: '注册成功'
 		})
 	})
 })
@@ -46,12 +47,13 @@ router.post('/register', (req, res, next) => {
 router.get('/signout', (req, res, next) => {
 	req.session.destroy((err) => {
 		if (err) {
-			res.json({
+			res.status(403)
+			return res.json({
 				status: 0,
 				msg: '退出失败'
 			})
-			return
 		}
+		res.status(200)
 		res.json({
 			status: 1,
 			msg: '退出成功'
@@ -66,25 +68,45 @@ router.post('/signin', (req, res, next) => {
 		password: body.password,
 	}, (err, docs) => {
 		if (err) {
-			res.json({
-				tatus: 0,
-				msg: '查询时出错'
+			res.status(403)
+			return res.json({
+				status: 0,
+				res: '',
+				msg: '请求出错'
 			})
-			return 
 		}
 		if (docs !== null) {
+			res.status(200)
 			req.session.token = docs
-			res.json({
-				tatus: 1,
-				res: docs
+			return res.json({
+				status: 1,
+				res: docs,
+				msg: '登录成功'
 			})
 		} else {
-			res.json({
-				tatus: 2,
-				res: '没有该账户'
+			res.status(403)
+			return res.json({
+				status: 2,
+				res: {},
+				msg: '账号不存在'
 			})
 		}
 	})
+})
+
+router.get('/proxy', (req, res, next) => {
+	res.json({
+		msg: '代理'
+	})
+})
+
+router.get('/test', (req, res, next) => {
+	request('http://localhost:3000/api/proxy', function (error, response, body) {
+        res.json({
+        	a: response,
+        	b: body
+        })
+    })
 })
 
 module.exports = router
