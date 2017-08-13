@@ -56,23 +56,10 @@
 					})
 					this.storeCommit('serUserInfo')
 					this.storeCommit('toggleProfile')
+                    this.notice.msg(res.body.msg, 'success', 1)
 	                this.progress.done()
-					console.log(res.body.msg)
 				} catch (err) {
-	                this.progress.done('fail')
-					console.log(err.body.msg)
-				}
-			},
-			async test () {
-				try {
-					this.progress.start()
-					const res = await this.$http({
-					    method: 'get',
-					    url: `${this.url}test`
-					})
-	                this.progress.done()
-	                console.log(res)
-				} catch (err) {
+                    this.notice.msg(err.body.msg, 'danger', 1)
 	                this.progress.done('fail')
 				}
 			}
@@ -87,7 +74,6 @@
 			}
 		},
 		mounted () {
-			this.test()
 			this.constRight = this.$refs.outerWrap.offsetWidth
 		}
 	}

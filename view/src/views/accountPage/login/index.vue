@@ -46,10 +46,10 @@
                     this.$router.push({
                         name: 'home'
                     })
+                    this.notice.msg(res.body.msg, 'success', 1)
                     this.progress.done()
-                    console.log(res.body.msg)
                 } catch (err) {
-                    console.log(err.body.msg)
+                    this.notice.msg(err.body.msg, 'danger', 1)
                     this.progress.done('fail')
                 }
             },

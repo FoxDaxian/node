@@ -94,19 +94,19 @@ router.post('/signin', (req, res, next) => {
 	})
 })
 
-router.get('/proxy', (req, res, next) => {
-	res.json({
-		msg: '代理'
-	})
-})
+// router.get('/proxy', (req, res, next) => {
+// 	res.json({
+// 		msg: '代理'
+// 	})
+// })
 
-router.get('/test', (req, res, next) => {
-	request('http://localhost:3000/api/proxy', function (error, response, body) {
-        res.json({
-        	a: response,
-        	b: body
-        })
-    })
-})
+// router.get('/test', (req, res, next) => {
+// 	request('http://localhost:3000/api/proxy', function (error, response, body) {
+//         res.json({
+//         	a: response,
+//         	b: body
+//         })
+//     })
+// })
 
 module.exports = router
