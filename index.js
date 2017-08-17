@@ -20,7 +20,7 @@ global.Promise = bluebird
 //连接数据库
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise // mongoose的Promise被弃用了...
-mongoose.connect('mongodb://127.0.0.1:27017/blog')
+mongoose.connect(`mongodb://${ config.host }/${ config.db }`)
 const db = mongoose.connection
 db.on('error', (error) => {
 	console.log(`连接数据库失败：${error}`)
@@ -50,7 +50,7 @@ app.use(session({
 	cookie: { maxAge	: 7 * 24 * 60 * 60 * 1000},
 	// session的存储方式，默认存在内存中，但是会丢失，存在数据库中则不会
 	store: new MongoStore({
-		url: 'mongodb://127.0.0.1:27017/blog'
+		url: `mongodb://${ config.host }/${ config.db }`
 	})
 }))
 
