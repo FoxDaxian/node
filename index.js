@@ -57,6 +57,8 @@ app.use(session({
 
 // use 路由
 app.use( '/api', commonRouter )
+// FIXME: 使用FIXME提醒自己和别人，要修复这里
+// TODO: 使用TODO来提示自己，要做的东西
 app.use( '/api/qiniu', (req, res, next) => {
 	var config = new qiniu.conf.Config();
 	config.zone = qiniu.zone.Zone_z1;
