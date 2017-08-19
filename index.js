@@ -1,19 +1,30 @@
-const bluebird = require('bluebird') // 为什么要用蓝鸟的promise替换node自身的promise呢？找时间查一下
+// FIXME: 使用FIXME提醒自己和别人，要修复这里
+// TODO: 使用TODO来提示自己，要做的东西
 const express = require('express')
 const app = express()
+const config = require('./config/')
+const commonRouter = require('./routers/common.router.js')
+const bluebird = require('bluebird') // TODO 为什么要用蓝鸟的promise替换node自身的promise呢？找时间查一下
 const bodyParser = require('body-parser') // 需要这个中间件来处理post请求
 const cookieParser = require('cookie-parser') // 解析cookies的
 const session = require('express-session') // 创建session的
 const MongoStore = require('connect-mongo')(session) // session存储的地方，express-session默认存储在内存里，但是易丢失
-const config = require('./config/')
-const commonRouter = require('./routers/common.router.js')
+const log4js = require('log4js')
+const util = require('./util/')
 
+util.mkdir('log')
 
+// TODO 区分log，所有路由改成try catch形式，分离开发和生产模式, 其他文件的log可能需要中间件穿进去
+
+log4js.configure(config.log4js)
+const logger = log4js.getLogger()
+console.log = logger.info.bind(logger)
+
+// 七牛
 const qiniu = require('qiniu')
 const accessKey = 'bETmnVX9dU_99S5JBxO991fHKdAi7NjabG7Rrkiz'
 const secretKey = 'Pq7c-GOmjn0Rn5vg8nHIBhiN6zfgwvTjyTVvWV3R'
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
-
 
 global.Promise = bluebird
 
@@ -54,12 +65,19 @@ app.use(session({
 	})
 }))
 
+// log4js中间件
+const accessLog = log4js.getLogger('access')
+const errorLog = log4js.getLogger('error')
+app.use('/', (req, res, next) => {
+	req.access = accessLog
+	req.error = errorLog
+	next()
+})
 
 // use 路由
-app.use( '/api', commonRouter )
-// FIXME: 使用FIXME提醒自己和别人，要修复这里
-// TODO: 使用TODO来提示自己，要做的东西
-app.use( '/api/qiniu', (req, res, next) => {
+app.use('/api', commonRouter )
+
+app.use('/api/qiniu', (req, res, next) => {
 	var config = new qiniu.conf.Config();
 	config.zone = qiniu.zone.Zone_z1;
 	var options = {
