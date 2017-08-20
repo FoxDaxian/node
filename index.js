@@ -8,23 +8,16 @@ const bluebird = require('bluebird') // TODO 为什么要用蓝鸟的promise替�
 const bodyParser = require('body-parser') // 需要这个中间件来处理post请求
 const cookieParser = require('cookie-parser') // 解析cookies的
 const session = require('express-session') // 创建session的
-const MongoStore = require('connect-mongo')(session) // session存储的地方，express-session默认存储在内存里，但是易丢失
+const MongoStore = require('connect-mongo')(session) // session存储的地方，express-session默认存储在内存里，但是切换进程丢失
 const log4js = require('log4js')
+const ip = require('ip')// refer: #https://github.com/indutny/node-ip
 const util = require('./util/')
 
 util.mkdir('log')
 
-// TODO 区分log，所有路由改成try catch形式，分离开发和生产模式, 其他文件的log可能需要中间件穿进去
-
 log4js.configure(config.log4js)
 const logger = log4js.getLogger()
 console.log = logger.info.bind(logger)
-
-// 七牛
-const qiniu = require('qiniu')
-const accessKey = 'bETmnVX9dU_99S5JBxO991fHKdAi7NjabG7Rrkiz'
-const secretKey = 'Pq7c-GOmjn0Rn5vg8nHIBhiN6zfgwvTjyTVvWV3R'
-const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 
 global.Promise = bluebird
 
@@ -40,7 +33,9 @@ db.on('open', () => {
 	console.log('连接数据库成功')
 })
 
-app.use('/static', express.static('public'))//设置资源目录
+// 设置资源目录
+app.use('/static', express.static('public'))
+app.use('/log', express.static('log'))
 
 //处理json与formData数据
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -68,15 +63,37 @@ app.use(session({
 // log4js中间件
 const accessLog = log4js.getLogger('access')
 const errorLog = log4js.getLogger('error')
-app.use('/', (req, res, next) => {
-	req.access = accessLog
-	req.error = errorLog
+
+// access
+app.use((req, res, next) => {
+	if (process.env.NODE_ENV === 'production') {
+		accessLog.info(`${ ip.address() }在${ new Date().toLocaleString() }请求`)
+	}
 	next()
 })
 
 // use 路由
 app.use('/api', commonRouter )
 
+// 404
+app.use('*', (req, res, next) => {
+	res.status(404).send('404')
+})
+
+// 错误处理
+app.use(function(err, req, res, next) {
+	if (process.env.NODE_ENV === 'production') {
+		errorLog.error(err)
+	}
+	console.log(err)
+	return res.status(500).send('未知错误')
+})
+
+// 七牛
+const qiniu = require('qiniu')
+const accessKey = 'bETmnVX9dU_99S5JBxO991fHKdAi7NjabG7Rrkiz'
+const secretKey = 'Pq7c-GOmjn0Rn5vg8nHIBhiN6zfgwvTjyTVvWV3R'
+const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 app.use('/api/qiniu', (req, res, next) => {
 	var config = new qiniu.conf.Config();
 	config.zone = qiniu.zone.Zone_z1;
@@ -92,19 +109,19 @@ app.use('/api/qiniu', (req, res, next) => {
 	var key='fsy.jpg';
 	// 文件上传
 	formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
-	  respBody, respInfo) {
-	  if (respErr) {
-	    throw respErr;
-	  }
-	  if (respInfo.statusCode == 200) {
-	    res.json({
-	    	status: 1,
-	    	msg: respBody
-	    })
-	  } else {
-	    console.log(respInfo.statusCode);
-	    console.log(respBody);
-	  }
+		respBody, respInfo) {
+		if (respErr) {
+			throw respErr;
+		}
+		if (respInfo.statusCode == 200) {
+			res.json({
+				status: 1,
+				msg: respBody
+			})
+		} else {
+			console.log(respInfo.statusCode);
+			console.log(respBody);
+		}
 	})
 } )
 
