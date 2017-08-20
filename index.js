@@ -12,6 +12,7 @@ const MongoStore = require('connect-mongo')(session) // session存储的地方�
 const log4js = require('log4js')
 const ip = require('ip')// refer: #https://github.com/indutny/node-ip
 const util = require('./util/')
+// TODO admin界面，进行管理，建立admin的专属表
 
 util.mkdir('log')
 
