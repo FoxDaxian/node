@@ -4,7 +4,8 @@
   "description": "study node&mongodb",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon entrance/dev.js",
+    "pm2": "nodemon entrance/prod.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "express-session": "^1.15.4",
+    "ip": "^1.1.5",
     "log4js": "2.3.3",
     "mongoose": "4.10.8",
     "nodemon": "^1.11.0",
