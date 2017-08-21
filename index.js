@@ -12,13 +12,15 @@ const MongoStore = require('connect-mongo')(session) // session存储的地方�
 const log4js = require('log4js')
 const ip = require('ip')// refer: #https://github.com/indutny/node-ip
 const util = require('./util/')
-// TODO admin界面，进行管理，建立admin的专属表
+const blogError = require('debug')('express:myblog')
 
-util.mkdir('log')
+// TODO admin界面，进行管理，建立admin的专属表
 
 log4js.configure(config.log4js)
 const logger = log4js.getLogger()
 console.log = logger.info.bind(logger)
+
+util.mkdir('log')
 
 global.Promise = bluebird
 
@@ -86,7 +88,7 @@ app.use(function(err, req, res, next) {
 	if (process.env.NODE_ENV === 'production') {
 		errorLog.error(err)
 	}
-	console.log(err)
+	blogError(err)
 	return res.status(500).send('未知错误')
 })
 

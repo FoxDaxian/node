@@ -4,7 +4,7 @@
   "description": "study node&mongodb",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon entrance/dev.js",
+    "dev": "set DEBUG=http,mail,express:*,app:* && nodemon entrance/dev.js",
     "pm2": "nodemon entrance/prod.js"
   },
   "repository": {
@@ -35,6 +35,8 @@
     "qiniu": "^7.0.5"
   },
   "devDependencies": {
-    "request": "^2.81.0"
+    "debug": "^3.0.0",
+    "request": "^2.81.0",
+    "supports-color": "^4.2.1"
   }
 }
