@@ -69,7 +69,7 @@
                     })
                     const resDate = res.body.res
                     delete resDate.password
-                    this.storeCommit('serUserInfo', {...resDate})
+                    this.$storeCommit('serUserInfo', {...resDate})
                     this.$router.push({
                         name: 'home'
                     })

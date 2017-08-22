@@ -42,7 +42,7 @@
                         }
                     })
                     const resDate = res.body.res
-                    this.storeCommit('serUserInfo', {...resDate})
+                    this.$storeCommit('serUserInfo', {...resDate})
                     this.$router.push({
                         name: 'home'
                     })

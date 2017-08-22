@@ -1,7 +1,7 @@
 import { store } from '@/store/'
 
 const install = (vue) => {
-	vue.prototype.storeCommit = (type, data = {}) => {
+	vue.prototype.$storeCommit = (type, data = {}) => {
 		store.commit(type, data)
 	}
 }

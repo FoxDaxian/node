@@ -49,7 +49,7 @@
 			// 切换 outer 组件的
 			switchOuter ( e ) {
 				const ev = e || window.event
-				this.storeCommit('toggleProfile')
+				this.$storeCommit('toggleProfile')
 				ev.stopPropagation()
 			}
 		},

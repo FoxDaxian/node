@@ -44,7 +44,7 @@
 			hidePanel (e) {
 				const ev = e || window.event
 				if (ev.keyCode === 27) {
-					this.profile && this.storeCommit('toggleProfile')
+					this.profile && this.$storeCommit('toggleProfile')
 				}
 			},
 			async signOut () {
@@ -54,8 +54,8 @@
 					    method: 'get',
 					    url: `${this.url}signout`
 					})
-					this.storeCommit('serUserInfo')
-					this.storeCommit('toggleProfile')
+					this.$storeCommit('serUserInfo')
+					this.$storeCommit('toggleProfile')
                     this.notice.msg(res.body.msg, 'success', 1)
 	                this.progress.done()
 				} catch (err) {
