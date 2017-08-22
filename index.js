@@ -12,7 +12,7 @@ const MongoStore = require('connect-mongo')(session) // session存储的地方�
 const log4js = require('log4js')
 const ip = require('ip')// refer: #https://github.com/indutny/node-ip
 const util = require('./util/')
-const blogError = require('debug')('express:myblog')
+const blogError = require('debug')('express:blogError')
 
 // TODO admin界面，进行管理，建立admin的专属表
 
@@ -89,7 +89,7 @@ app.use(function(err, req, res, next) {
 		errorLog.error(err)
 	}
 	blogError(err)
-	return res.status(500).send('未知错误')
+	return res.status(err.status).send(err)
 })
 
 // 七牛
