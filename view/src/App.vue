@@ -23,9 +23,33 @@
 		},
 		data () {
 			return {
+				temp: ''
 			}
 		},
 		methods:{
+			async testPost(token) {
+				const res = await this.$http({
+					method: 'post',
+					url: `${ this.url }testPost`,
+					body: {
+						token
+					}
+				})
+				console.log(res)
+			},
+			async setjwt () {
+				try {
+					const res = await this.$http({
+						method: 'get',
+						url: `${ this.url }setjwt`
+					})
+					console.log(res)
+					this.temp = res.data
+					this.testPost(res.data)
+				} catch (err) {
+					console.log(err)
+				}
+			},
 			async fn () {
 				try {
 					const res = await this.$http({
@@ -43,9 +67,10 @@
 			...mapState(['profile'])
 		},
 		mounted () {
+			this.setjwt()
 			// this.fn()
 			window.addEventListener('click', (e) => {
-				this.profile && this.storeCommit('toggleProfile')
+				this.profile && this.$storeCommit('toggleProfile')
 			});
 		}
 	}

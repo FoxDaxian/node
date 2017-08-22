@@ -5,6 +5,31 @@ const router = express.Router({
 })
 const { User } = require('../model/')
 
+
+const jwt = require('jsonwebtoken')//设置和验证token的
+const expressJWT = require('express-jwt')// 验证token的 继续撸文档 #https://github.com/auth0/express-jwt
+const secretOrPrivateKey = "fox" 
+
+router.get('/setjwt', function(req,res) {
+    var token = jwt.sign({username: 'fox', age: 23}, secretOrPrivateKey) //生成一个jwt并发送给客户端
+    return res.status(200).json(token);
+});
+
+router.post('/testPost', expressJWT({
+	secret: secretOrPrivateKey,
+	credentialsRequired: false,
+	getToken: function fromHeaderOrQuerystring (req) {
+		return req.body.token;
+	}
+}), (req, res, next) => {	
+	res.json({
+		msg: req.user
+	})
+
+})
+
+
+
 // 验证身份，即有无session
 router.get('/authentication', (req, res, next) => {
 	if (typeof req.session.token !== 'undefined') {
