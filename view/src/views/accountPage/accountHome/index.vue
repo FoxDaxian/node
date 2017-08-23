@@ -4,6 +4,8 @@
 
 <template>
     <div class="wrap">
+        <!-- TODO github三方登录 -->
+        <a href="https://github.com/login/oauth/authorize?client_id=b697b41af4fb82574436&scope=user:email">测试github</a>
         <div class="taps">
             <div class="centerWrap">
                 <div class="login" @click='login' :class="{activeClass: activePage === 'login'}">登录</div>
