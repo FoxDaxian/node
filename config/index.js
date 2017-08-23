@@ -8,5 +8,8 @@ module.exports = {
 	db: 'blog',
 
 	// log配置
-	log4js: log4js
+	log4js: log4js,
+
+	// jwt secret
+	jwtSecret: 'fox'
 }
