@@ -10,6 +10,7 @@ const router = express.Router({
 const { User } = require('../model/')
 
 // jwt
+//// ----------------------分割线----------------------
 const secretOrPrivateKey = config.jwtSecret
 router.get('/setjwt', function(req,res) {
     var token = jwt.sign({username: 'fox', age: 23}, secretOrPrivateKey) //生成一个jwt并发送给客户端
@@ -27,8 +28,45 @@ router.post('/testPost', expressJWT({
 		msg: req.user
 	})
 })
+//// ----------------------分割线----------------------
 
-
+router.post('/github', async (req, res, next) => {
+	request({
+	    url: 'https://github.com/login/oauth/access_token',
+	    method: "POST",
+	    json: true,
+	    headers: {
+	        "content-type": "application/json",
+	        'User-Agent': 'a13821190779'
+	    },
+	    body: {
+	    	client_id: 'b697b41af4fb82574436',
+	    	client_secret: '1de913d977bd1b030f4fba5ddf700521bb3d821c',
+	    	code: req.body.code
+	    }
+	}, function(error, response, body) {
+	    if (!error && response.statusCode == 200) {
+	    	request({
+	    		url: `https://api.github.com/user?access_token=${ body.access_token }`,
+	    		method: 'GET',
+	    		headers: {
+	    		    'User-Agent': 'a13821190779'
+	    		}
+	    	}, (err, resp, result) => {
+	    		if (err) {
+	    			return res.json({
+	    				res: '错误'
+	    			})
+	    		}
+	    		console.log(result)
+	    		return res.json({
+	    			resp,
+	    			result
+	    		})
+	    	})
+	    }
+	})
+})
 
 // 验证身份，即有无session
 router.get('/authentication', (req, res, next) => {

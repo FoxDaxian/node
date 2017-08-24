@@ -4,8 +4,6 @@
 
 <template>
     <div class="wrap">
-        <!-- TODO github三方登录 -->
-        <a href="https://github.com/login/oauth/authorize?client_id=b697b41af4fb82574436&scope=user:email">测试github</a>
         <div class="taps">
             <div class="centerWrap">
                 <div class="login" @click='login' :class="{activeClass: activePage === 'login'}">登录</div>
@@ -32,6 +30,21 @@
             }
         },
         methods: {
+            async github () {
+                console.log('发送请求');
+                try {
+                    const res = await this.$http({
+                        method: 'post',
+                        url: `${ this.url }github`,
+                        body: {
+                            code: this.$route.query.code
+                        }
+                    })
+                    console.log(res)
+                } catch (err) {
+                    console.log(err)
+                }
+            },
             login () {
                 this.$router.push({
                     name: 'login'
@@ -49,6 +62,7 @@
             }
         },
         mounted () {
+            this.$route.query.code && this.github()
         },
         beforeRouteEnter (to, from, next) {
             next(vm => {
