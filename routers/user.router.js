@@ -60,8 +60,7 @@ router.post('/github', async (req, res, next) => {
 	    		}
 	    		console.log(result)
 	    		return res.json({
-	    			resp,
-	    			result
+	    			resp
 	    		})
 	    	})
 	    }

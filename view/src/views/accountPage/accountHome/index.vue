@@ -40,6 +40,7 @@
                             code: this.$route.query.code
                         }
                     })
+                    console.log(JSON.stringify(res, null, 4))
                     console.log(res)
                 } catch (err) {
                     console.log(err)
