@@ -7,7 +7,8 @@
 	<header>
 		<canvas class="logo" ref="canvas" @click="backHome"></canvas>
 		<div class="user_panel" @click="interactiveEvent">
-			<span v-if="Object.keys(userInfo).length"><img :src="require(`@/assets/default-avator.png`)" alt="fox"></span>
+			<span v-if="Object.keys(userInfo).length"><img :src="userInfo.avator || require(`@/assets/default-avator.png`)" alt="fox"></span>
+
 			<!-- 用v-if为了避免闪烁 -->
 			<span v-text="msg" v-if="!Object.keys(userInfo).length && userInfo !== ''"></span>
 		</div>
