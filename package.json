@@ -34,7 +34,8 @@
     "log4js": "2.3.3",
     "mongoose": "4.10.8",
     "nodemon": "^1.11.0",
-    "qiniu": "^7.0.5"
+    "qiniu": "^7.0.5",
+    "request-promise": "^4.2.1"
   },
   "devDependencies": {
     "debug": "^3.0.0",
