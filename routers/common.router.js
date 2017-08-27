@@ -5,6 +5,7 @@ const router = express.Router({
 const userRouter = require('./user.router.js')
 
 router.use(( req, res, next ) => {
+	process.env.NODE_ENV === 'production' && next() // 这里可能有坑，先记一下
 	// 跨域接受cookies，进行身份验证
 	res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
 	res.header('Access-Control-Allow-Credentials', true)

@@ -16,7 +16,8 @@ const blogError = require('debug')('express:blogError')
 
 // TODO admin界面，进行管理，建立admin的专属表
 
-log4js.configure(config.log4js)
+const devConf = process.env.NODE_ENV === 'development' ? config.dev : config.prod
+log4js.configure(devConf.log4js)
 const logger = log4js.getLogger()
 console.log = logger.info.bind(logger)
 
@@ -27,7 +28,7 @@ global.Promise = bluebird
 //连接数据库
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise // mongoose的Promise被弃用了...
-mongoose.connect(`mongodb://${ config.host }/${ config.db }`)
+mongoose.connect(`mongodb://${ devConf.host }/${ devConf.db }`)
 const db = mongoose.connection
 db.on('error', (error) => {
 	console.log(`连接数据库失败：${error}`)
@@ -59,7 +60,7 @@ app.use(session({
 	cookie: { maxAge	: 7 * 24 * 60 * 60 * 1000},
 	// session的存储方式，默认存在内存中，但是会丢失，存在数据库中则不会
 	store: new MongoStore({
-		url: `mongodb://${ config.host }/${ config.db }`
+		url: `mongodb://${ devConf.host }/${ devConf.db }`
 	})
 }))
 
@@ -74,7 +75,6 @@ app.use((req, res, next) => {
 	}
 	next()
 })
-
 // use 路由
 app.use('/api', commonRouter )
 
@@ -91,6 +91,7 @@ app.use(function(err, req, res, next) {
 	blogError(err)
 	return res.status(err.status).send(err)
 })
+
 
 // 七牛
 const qiniu = require('qiniu')
@@ -129,4 +130,4 @@ app.use('/api/qiniu', (req, res, next) => {
 } )
 
 // 配置文件选项，监听
-app.listen(config.port)
+app.listen(devConf.port)
