@@ -5,7 +5,7 @@
 <template>
     <div class="wrap">
         <!-- TODO github三方登录 -->
-        <a href="https://github.com/login/oauth/authorize?client_id=b697b41af4fb82574436&amp;scope=user:email&amp;redirect_uri=http://localhost:8080/account">测试github</a>
+        <div @click="loginByGithub">github登录</div>
         <form>
             <div class="account">
                 <label for="account">账号</label>
@@ -32,6 +32,9 @@
             }
         },
         methods: {
+            loginByGithub () {
+                location.href = `https://github.com/login/oauth/authorize?client_id=b697b41af4fb82574436&amp;scope=user:email&amp;state=${ Math.random() }`
+            },
             async signin () {
                 try {
                     this.progress.start()
