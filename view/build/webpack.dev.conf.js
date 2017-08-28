@@ -1,3 +1,4 @@
+var path = require('path')
 var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
@@ -28,7 +29,14 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      chunks: ['app']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      template: path.resolve(__dirname, '../admin/index.html'),
+      inject: true,
+      chunks: ['admin']
     }),
     new FriendlyErrorsPlugin()
   ]
