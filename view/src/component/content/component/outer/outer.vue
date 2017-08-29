@@ -44,7 +44,7 @@
 			hidePanel (e) {
 				const ev = e || window.event
 				if (ev.keyCode === 27) {
-					this.profile && this.$storeCommit('toggleProfile')
+					this.panelStatus && this.$storeCommit('togglePanel')
 				}
 			},
 			async signOut () {
@@ -55,7 +55,7 @@
 					    url: `${this.url}signout`
 					})
 					this.$storeCommit('serUserInfo')
-					this.$storeCommit('toggleProfile')
+					this.$storeCommit('togglePanel')
                     this.notice.msg(res.body.msg, 'success', 1)
 	                this.progress.done()
 				} catch (err) {
@@ -65,12 +65,12 @@
 			}
 		},
 		computed: {
-			...mapState(['userInfo', 'profile']),
+			...mapState(['userInfo', 'panelStatus']),
 			right () {
-				if (this.profile) {
+				if (this.panelStatus) {
 					this.$refs.outerWrap.focus()
 				}
-				return this.profile ? this.$refs.outerWrap.offsetWidth : 0
+				return this.panelStatus ? this.$refs.outerWrap.offsetWidth : 0
 			}
 		},
 		mounted () {
