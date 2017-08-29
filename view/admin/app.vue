@@ -1,6 +1,6 @@
 <style lang="scss" scoped>
 	.adminWrap{
-		color:red;
+		color: red;
 	}
 </style>
 
@@ -18,7 +18,7 @@
 		data () {
 			return {
 
-			};
+			}
 		}
-	};
+	}
 </script>

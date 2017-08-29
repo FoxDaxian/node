@@ -17,7 +17,7 @@
 </template>
 
 <script>
-	import outer from './component/outer/outer'
+	import outer from '@/component/content/component/outer/outer'
 	import crumbs from '@/component/content/component/crumbs/crumbs'
 
 	export default {
@@ -29,7 +29,7 @@
 		data () {
 			return {
 
-			};
+			}
 		}
-	};
+	}
 </script>
