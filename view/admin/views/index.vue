@@ -1,22 +1,18 @@
 <style lang="scss" scoped>
+
 </style>
 
 <template>
 	<div class="adminWrap">
-		这是admin页面
-		<entrance-point></entrance-point>
+		路由入口111
 	</div>
 </template>
 
 <script>
-	import entrancePoint from '@@/views/'
-
 	export default {
 
-		name: 'admin',
-		components: {
-			entrancePoint
-		},
+		name: 'index',
+
 		data () {
 			return {
 
