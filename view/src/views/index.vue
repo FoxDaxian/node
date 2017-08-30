@@ -26,24 +26,6 @@
 			}
 		},
 		methods:{
-			async authentication ()  {
-				try {
-					this.progress.start()
-					const res = await this.$http({
-						method: 'get',
-						url: `${this.url}authentication`
-					})
-					if (res.data.token) {
-						this.$storeCommit('serUserInfo', res.data.token)
-					} else {
-						this.$storeCommit('serUserInfo', {})
-					}
-					this.progress.done()
-				} catch (err) {
-					this.progress.done('fail')
-					console.log(err)
-				}
-			},
 			async fn () {
 				try {
 					const res = await this.$http({
@@ -61,7 +43,6 @@
 			...mapState(['panelStatus'])
 		},
 		mounted () {
-			this.authentication()
 			// this.fn()
 			window.addEventListener('click', (e) => {
 				this.panelStatus && this.$storeCommit('togglePanel')

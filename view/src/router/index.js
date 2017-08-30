@@ -12,6 +12,27 @@ const login = resolve => require(['@/views/accountPage/login/'], resolve)
 
 Vue.use(VueRouter)
 
+const authentication = async (http, progress, url) =>  {
+	try {
+		progress.start()
+		const res = await http({
+			method: 'get',
+			url: `${ url }authentication`
+		})
+		progress.done()
+		if (res.data.token) {
+			store.commit('serUserInfo', res.data.token)
+			return Promise.resolve(true)
+		} else {
+			store.commit('serUserInfo', {})
+			return Promise.resolve(false)
+		}
+	} catch (err) {
+		progress.done('fail')
+		console.log(err)
+	}
+}
+
 const foo = (http, progress, url) => {
 	const routers = new VueRouter({
 		mode: "history",
@@ -38,39 +59,25 @@ const foo = (http, progress, url) => {
 					path: "login",
 					name: 'login',
 					component: login
-				}],
-				beforeEnter: (to, from, next) => {
-					console.log(store.state)
+				}]
+			}],
+			beforeEnter: async (to, from, next) => {
+				if (Object.keys(store.state.userInfo).length) {
+					return next()
 				}
-			}]
+				if (await authentication(http, progress, url)) {
+					if (/\/account.*/.test(to.path)) {
+						return next({
+							name: 'home'
+						})
+					}
+					next()
+				} else {
+					next()
+				}
+			}
 		}]
-		// routes: [{
-		// 	path: "/",
-		// 	name: "home",
-		// 	components: {
-		// 		nav: Nav,				//左侧导航
-		// 		article: Article,		//中间主题内容
-		// 		sidebar: SideBar 		//右边其他内容
-		// 	}
-		// }, {
-		// 	path: "/account",
-		// 	name: "account",
-		// 	component: accountHome,
-		// 	children: [{
-		// 		path: "register",
-		// 		name: 'register',
-		// 		component: register
-		// 	}, {
-		// 		path: "login",
-		// 		name: 'login',
-		// 		component: login
-		// 	}],
-		// 	beforeEnter: (to, from, next) => {
-		// 		console.log(store.state)
-		// 	}
-		// }]
 	})
-
 	return routers
 }
 
