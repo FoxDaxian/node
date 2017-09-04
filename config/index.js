@@ -7,6 +7,8 @@ module.exports = {
 		// 数据库配置
 		host: 'localhost:27017',
 		db: 'blog',
+		account: 'admin',
+		pwd: '123456',
 
 		// log配置
 		log4js: log4js,
@@ -24,6 +26,8 @@ module.exports = {
 		// 数据库配置
 		host: 'localhost:27017',
 		db: 'blog',
+		account: 'admin',
+		pwd: '123456',
 
 		// log配置
 		log4js: log4js,
